@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Row from './components/Row';
 
-const url = "http://localhost:3001";
+const url = "http://localhost:3001/";
 
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
 
   
   const addTask = () => {
-    axios.post(url + "/create", {description: task})
+    axios.post(url + "create", {description: task})
     .then((response) => {
       setTasks([...tasks, {id: response.data.id, description: task}])
       setTask("");
@@ -32,7 +32,7 @@ function App() {
   
 
   const deleteTask = (id) => {
-    axios.delete(url + "/delete/" + id) 
+    axios.delete(url + "delete/" + id) 
     .then(response => {
       const withoutRemoved = tasks.filter(item => item.id !== id);
       setTasks(withoutRemoved);
