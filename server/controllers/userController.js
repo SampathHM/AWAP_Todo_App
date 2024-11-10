@@ -1,6 +1,8 @@
-import { hash } from 'bcrypt';
-import { insertUser } from '../models/User.js';
+import { hash, compare } from 'bcrypt';
+import { insertUser, selectUserByEmail } from '../models/User.js';
 import { ApiError } from '../helpers/ApiError.js';
+import jwt from 'jsonwebtoken';
+const { sign } = jwt;
 
 const postRegistration = async (req, res, next) => {
     try {
@@ -9,6 +11,7 @@ const postRegistration = async (req, res, next) => {
         const hashedPassword = await hash(req.body.password, 10);
         const userFromDb = await insertUser(req.body.email, hashedPassword);
         const user = userFromDb.rows[0];
+        if (!user) return next(new ApiError('Failed to register user', 500))
         return res.status(201).json(createUserObject(user.id, user.email))
     } catch (error) {
         return next(error);

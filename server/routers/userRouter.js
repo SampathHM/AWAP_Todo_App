@@ -1,11 +1,12 @@
-import { pool } from "../helpers/db.js";
 import { Router } from "express";
-import { hash } from "bcrypt";
-import { compare } from "bcrypt";
-import jwt from "jsonwebtoken";
-const { sign } = jwt;
+import { postRegistration, postLogin } from "../controllers/userController.js";
 
 const router = Router();
+
+router.post('/register',postRegistration);
+router.post('/login', postLogin)
+
+/* While using the userController.js this code is not needed
 
 router.post("/register", (req, res, next) => {
     hash(req.body.password,10, (error, hashedPassword) => {
@@ -50,6 +51,6 @@ router.post("/login", (req,res,next) => {
         return next(error);
     }
 })              
-
+*/
 
 export default router;

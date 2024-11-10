@@ -8,4 +8,9 @@ const insertTask = async (description) => {
     return await pool.query('INSERT INTO task (description) VALUES ($1) RETURNING *', [description]);
 }
 
-export { selectAllTasks, insertTask };
+const removeTask = async(id) => {
+    return await pool.query('delete from task where id = $1', [id])
+}
+
+
+export { selectAllTasks, insertTask , removeTask };
